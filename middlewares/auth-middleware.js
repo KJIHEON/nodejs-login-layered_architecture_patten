@@ -13,6 +13,7 @@ const { User } = require("../models");
 }
 try { //검증
   const { userId } = jwt.verify(token, "key");  //시크릿 키값으로 토큰을 검증함
+  console.log(userId,"88888888888888888888888888888888888888888")
   User.findByPk(userId).then((user) => {
     res.locals.user = user; //res.locals.user데이터를 담는다 가상공간에
     console.log(res.locals.user,"미들 우[엉ㅇㅇ")

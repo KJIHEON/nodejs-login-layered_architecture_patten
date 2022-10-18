@@ -1,3 +1,4 @@
+//c최종
 const errorLogger = (error, request, response, next) => {
   console.error(error);
   next(error); // errorLogger -> errorHandler

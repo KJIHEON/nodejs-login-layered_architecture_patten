@@ -49,6 +49,30 @@ class Postsevice {
       updatedAt: postOne.updatedAt,
     }
   }
+  //게시물 수정 하기
+  updatePost = async ({userId,postId,title,content})=>{
+    ///가공해서 보내줌
+    const findOnePost = await this.Postrepository.getfindById({postId})
+    if(findOnePost.userId !== userId){
+      throw new Error ("작성자가 일치 하지 않습니다.")
+    }
+    await this.Postrepository.updatePost({userId,postId,title,content})
+   return {
+      postId: findOnePost.postId,
+      userId : findOnePost.userId,
+      nickname: findOnePost.nickname,
+      title: findOnePost.title,
+      content: findOnePost.content,
+      createdAt: findOnePost.createdAt,
+      updatedAt: findOnePost.updatedAt,
+   }
+  }
+
+  //게시물 삭제
+  deletePost = async ({userId,postId})=>{
+    const deletePost = await this.Postrepository.deletePost({userId,postId})
+    return deletePost
+  }
 }
 
 module.exports = Postsevice;

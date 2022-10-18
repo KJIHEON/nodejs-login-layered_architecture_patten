@@ -21,6 +21,17 @@ class PostRepository {
     const postOne = await Post.findByPk(postId)
     return postOne
   }
+  //게시물 수정
+  updatePost = async({userId,postId,title,content})=>{
+    console.log("수정요 레포")
+    const updatepostOne = await Post.update({title,content},{where : {postId,userId}})
+    return updatepostOne
+  }
+  //게시물 삭제
+  deletePost = async({userId,postId})=>{
+    const deletePost = await Post.destroy({where :{userId,postId}})
+    return deletePost
+  }
 }
 
 module.exports = PostRepository;

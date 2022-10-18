@@ -1,10 +1,10 @@
-require("dotenv").config();
+require("dotenv").config(); //.env 임포트
 
-const {DB_USERNAME, DB_PASSWORD} = process.env
+const {DB_USERNAME, DB_PASSWORD} = process.env //process.env.DB_USERNAME 이렇게 써두됨
 
 const config = {
   "development": {
-    "username": DB_USERNAME,
+    "username": DB_USERNAME, //process.env.DB_USERNAME 이렇게 써두됨
     "password": DB_PASSWORD,
     "database": "4week",
     "host": "127.0.0.1",

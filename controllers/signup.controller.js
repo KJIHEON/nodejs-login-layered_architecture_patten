@@ -30,8 +30,7 @@ class SignupController  {
     //정보확인후 클라에게 보여줌
   }catch(error) {
       console.log(error)
-      res.status(error.status || 400);
-      res.json({errorMessage : error.message})
+      res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
   }
  }
 }
