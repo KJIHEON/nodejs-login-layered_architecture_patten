@@ -25,13 +25,10 @@ module.exports = {
       content: {
         type: Sequelize.STRING,
       },
-      likes: {
-        type: Sequelize.INTEGER,
-      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('now') //작성 시간을 보여줌
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         type : Sequelize.DATE,

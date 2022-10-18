@@ -22,11 +22,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey:true},
     nickname: DataTypes.STRING,
     userId: DataTypes.INTEGER,
-    likes: DataTypes.INTEGER,
     title : DataTypes.STRING,
     content : DataTypes.STRING,
   }, {
-    timestamps: false,
     sequelize,
     modelName: 'Post',
   });

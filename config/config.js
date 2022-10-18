@@ -6,7 +6,7 @@ const config = {
   "development": {
     "username": DB_USERNAME,
     "password": DB_PASSWORD,
-    "database": "5week",
+    "database": "4week",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

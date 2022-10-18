@@ -2,7 +2,6 @@ const SignupService = require('../services/signup.service')
 // const { InvalidParamsError } = require('../exceptions/index.exception');
  //parms만 유효성 검사를 한다.
 
-console.log("회원가입 컨트롤러예요")
 //exports
 class SignupController  {
   signupService = new SignupService()
