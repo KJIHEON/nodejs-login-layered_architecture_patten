@@ -10,6 +10,6 @@ router.get('/',PostController.getPost)
 router.post('/',authmiddleware,PostController.createPost)
 router.get('/:postId',PostController.getfindById) 
 router.put('/:postId',authmiddleware,PostController.updatePost)
-router.delete('/:postId',PostController.deletePost)
+router.delete('/:postId',authmiddleware,PostController.deletePost)
 module.exports = router;
 

@@ -6,7 +6,6 @@ class Postsevice {
   findAllPosts = async ()=>{
     //서비스로 보내줌
     const allpost = await this.Postrepository.findAllPosts()
-    console.log(allpost,"갯요청이요")
     //작성 날짜로 내림차순
     allpost.sort((a,b)=>{return b.createdAt-a.createdAt})
     //데이터를 가공하여 컨트롤러로 보내줌
@@ -23,7 +22,6 @@ class Postsevice {
   }
    //게시물을 저장한다.
   createPost = async ({userId,nickname,title ,content})=>{
-    console.log(title,content,"서비스")
     const createpost = await this.Postrepository.createPost({userId,nickname,title ,content})
     //가공해야한다.
     return {
@@ -51,11 +49,12 @@ class Postsevice {
   }
   //게시물 수정 하기
   updatePost = async ({userId,postId,title,content})=>{
-    ///가공해서 보내줌
+     //포스트 아이디봐 일치하는것을 찾아옴
     const findOnePost = await this.Postrepository.getfindById({postId})
     if(findOnePost.userId !== userId){
       throw new Error ("작성자가 일치 하지 않습니다.")
     }
+    ///가공해서 보내줌
     await this.Postrepository.updatePost({userId,postId,title,content})
    return {
       postId: findOnePost.postId,
@@ -70,6 +69,11 @@ class Postsevice {
 
   //게시물 삭제
   deletePost = async ({userId,postId})=>{
+    //포스트 아이디봐 일치하는것을 찾아옴
+    const findOnePost = await this.Postrepository.getfindById({postId})
+    if(findOnePost.userId !== userId){
+      throw new Error ("작성자가 일치 하지 않습니다.")
+    }
     const deletePost = await this.Postrepository.deletePost({userId,postId})
     return deletePost
   }
