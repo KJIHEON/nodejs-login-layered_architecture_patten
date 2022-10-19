@@ -7,5 +7,8 @@ const CommentsController = new commentsController()
 
 
 router.post('/:postId',authmiddleware,CommentsController.ceratecomments)
+router.get('/:postId',CommentsController.getfindById)
+router.put('/:commentId',authmiddleware,CommentsController.updatecomment)
+router.delete('/:commentId',authmiddleware,CommentsController.deletecomment)
 
 module.exports = router;

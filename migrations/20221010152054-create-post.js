@@ -25,6 +25,10 @@ module.exports = {
       content: {
         type: Sequelize.STRING,
       },
+      likes :{
+        type: Sequelize.INTEGER,
+        defaultValue: 0, ///시작값은  0
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

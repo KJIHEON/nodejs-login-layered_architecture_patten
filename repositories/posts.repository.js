@@ -12,7 +12,7 @@ class PostRepository {
   createPost = async ({userId,nickname,title ,content})=>{
     console.log(userId,nickname,title ,content,"레포")
     //받아온 정보를 저장함
-    const createpost = await Post.create({userId,nickname,title ,content}) 
+    const createpost = await Post.create({userId,nickname, title ,content}) 
     return createpost
   }
  //상세페이지 조회

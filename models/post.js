@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     title : DataTypes.STRING,
     content : DataTypes.STRING,
+    likes :{
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   }, {
     sequelize,
     modelName: 'Post',

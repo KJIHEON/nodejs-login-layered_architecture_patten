@@ -1,4 +1,6 @@
 const Postrepository= require('../repositories/posts.repository')
+const {ValidationError} = require('../exceptions/index.exceptions')
+
 
 class Postsevice {
   Postrepository = new Postrepository() //변수를 선언한후 Postrepositorie인스턴스로 할당
@@ -31,7 +33,7 @@ class Postsevice {
       title: createpost.title,
       content: createpost.content,
       createdAt: createpost.createdAt,
-      updatedAt: createpost.updatedAt,
+      updatedAt: createpost.updatedAt, 
     }
   }
   //상세 페이지 조회
@@ -45,6 +47,7 @@ class Postsevice {
       content: postOne.content,
       createdAt: postOne.createdAt,
       updatedAt: postOne.updatedAt,
+      likes : postOne.likes,
     }
   }
   //게시물 수정 하기
@@ -52,7 +55,9 @@ class Postsevice {
      //포스트 아이디봐 일치하는것을 찾아옴
     const findOnePost = await this.Postrepository.getfindById({postId})
     if(findOnePost.userId !== userId){
-      throw new Error ("작성자가 일치 하지 않습니다.")
+      console.log(error)
+    //  return res.status(400).send({errorMessage : "작성자가 일치 하지 않습니다."})
+      throw new ValidationError("작성자가 일치 하지 않습니다.")
     }
     ///가공해서 보내줌
     await this.Postrepository.updatePost({userId,postId,title,content})
@@ -72,7 +77,8 @@ class Postsevice {
     //포스트 아이디봐 일치하는것을 찾아옴
     const findOnePost = await this.Postrepository.getfindById({postId})
     if(findOnePost.userId !== userId){
-      throw new Error ("작성자가 일치 하지 않습니다.")
+      // return res.status(400).send({errorMessage : "작성자가 일치 하지 않습니다."})
+      throw new ValidationError("작성자가 일치 하지 않습니다.")
     }
     const deletePost = await this.Postrepository.deletePost({userId,postId})
     return deletePost

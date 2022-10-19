@@ -6,37 +6,68 @@ class PostController {
     postsevice = new PostSevice()
 //모든 게시물 찾아오기
   getPost = async (req,res,next)=>{
+  try{
   const Posts = await this.postsevice.findAllPosts()
   res.status(200).json({data : Posts})
+  
+  }catch(error) {
+  console.log(error)
+  res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+}
   }
 //게시물 저장
   createPost = async (req,res,next)=>{
+    try {
     const {userId,nickname} = res.locals.user
     const {title ,content} = req.body
-    const Posts = await this.postsevice.createPost({userId,nickname,title ,content})
-    res.status(201).json({data : Posts})
+    await this.postsevice.createPost({userId,nickname,title ,content})
+    res.status(201).json({msg : "게시물을 저장헀습니다"})
+    }catch(error) {
+    console.log(error)
+    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+}
     }
 
     //상제페이지 조회
   getfindById = async (req,res,next)=>{
+    try{
     const {postId} = req.params;
     const postOne = await this.postsevice.getfindById({postId})
     res.status(200).json({data : postOne})
+  
+    }catch(error) {
+    console.log(error)
+    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+}
   }
   //페이지 수정
   updatePost = async (req,res,next)=>{
+    try{
+
     const {userId} = res.locals.user
     const {postId} = req.params;
     const {title,content} = req.body
     //수정할 것을 보내준다
-    const updatepostOne = await this.postsevice.updatePost({userId,postId,title,content})
-    res.status(200).json({data : updatepostOne})
+    await this.postsevice.updatePost({userId,postId,title,content})
+    res.status(200).json({msg : "게시물을 수정했습니다"})
+
+    }catch(error) {
+    console.log(error)
+    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+}
   }
   deletePost = async (req,res,next)=>{
+    try{
+
     const {userId} = res.locals.user
     const {postId} = req.params
-    const deletePost = await this.postsevice.deletePost({userId,postId})
-    res.status(200).json({data : deletePost})
+    await this.postsevice.deletePost({userId,postId})
+    res.status(200).json({msg : "게시물을 삭제했습니다."})
+
+    }catch(error) {
+    console.log(error)
+    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+}
   }
 }
 
