@@ -56,6 +56,7 @@ class PostController {
     res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
 }
   }
+  //게시물 삭제
   deletePost = async (req,res,next)=>{
     try{
 
