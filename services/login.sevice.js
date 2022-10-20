@@ -15,6 +15,7 @@ login = async ({nickname, password})=>{
     if(!user || password !== user.password){
       throw new ValidationError("유저가 없거나 비밀번호가 일치하지 않습니다.")
       // return res.status(400).send({errorMessage : "유저가 없거나 비밀번호가 일치하지 않습니다."})
+      //리프레쉬 토큰은 디비에 저장시켜야함
     }
     //토큰을 만들어서 보내준다
     const token = jwt.sign({userId : user.userId },"key")

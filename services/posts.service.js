@@ -1,7 +1,8 @@
 const Postrepository= require('../repositories/posts.repository')
 const {ValidationError} = require('../exceptions/index.exceptions')
 
-
+//같으면 클래스내 함수로 구성한다
+// 클래스내 함수를 만들어서 보내줌
 class Postsevice {
   Postrepository = new Postrepository() //변수를 선언한후 Postrepositorie인스턴스로 할당
 //모든 게시물을 가져옴
@@ -39,16 +40,7 @@ class Postsevice {
   //상세 페이지 조회
   getfindById = async ({postId})=>{
     const postOne = await this.Postrepository.getfindById({postId})
-    return {
-      postId: postOne.postId,
-      userId : postOne.userId,
-      nickname: postOne.nickname,
-      title: postOne.title,
-      content: postOne.content,
-      createdAt: postOne.createdAt,
-      updatedAt: postOne.updatedAt,
-      likes : postOne.likes,
-    }
+    return this.fomatReturnData(postOne) //같은 클래스내 함수를 만들어서 this써야함
   }
   //게시물 수정 하기
   updatePost = async ({userId,postId,title,content})=>{
@@ -82,6 +74,19 @@ class Postsevice {
     }
     const deletePost = await this.Postrepository.deletePost({userId,postId})
     return deletePost
+  }
+  
+  fomatReturnData =(post)=>{
+    return {
+    postId: post.postId,
+      userId : post.userId,
+      nickname: post.nickname,
+      title: post.title,
+      content: post.content,
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt,
+      likes : post.likes,
+    }
   }
 }
 

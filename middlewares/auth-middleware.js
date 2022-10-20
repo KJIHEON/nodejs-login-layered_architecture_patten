@@ -24,6 +24,10 @@ try { //검증
   });
 }
 }
+
+
+//리프레쉬 토큰 검증 api , 생성하고 디비에 저장, 암호화 해야함(해싱), 로그인할떄 디비 ㅡ 해싱한거 확인.
+
 //z클라이언트에서 보내줄때 사용
   //   const { authorization } = req.headers;
   //   // console.log(req.headers,"미들")

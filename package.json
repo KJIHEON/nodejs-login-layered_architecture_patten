@@ -13,6 +13,25 @@
     "sequelize": "^6.24.0"
   },
   "devDependencies": {
+    "jest": "^29.2.1",
     "sequelize-cli": "^6.5.1"
-  }
+  },
+  "name": "nodejs-login-layered_architecture_patten",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KJIHEON/nodejs-login-layered_architecture_patten.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KJIHEON/nodejs-login-layered_architecture_patten/issues"
+  },
+  "homepage": "https://github.com/KJIHEON/nodejs-login-layered_architecture_patten#readme",
+  "description": ""
 }
