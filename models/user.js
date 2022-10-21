@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      //하나의 유저는 많은 좋아요를 누를수 있다.
+      this.hasMany(models.Likes, {as: "Likes",foreignKey: "userId"});
+      //하나의 유저는 많은 게시물을 쓸 수 있다
+      this.hasMany(models.Post,{ as : "Post",foreignKey : "userId" })
+      //하나의 유저는 많은 코멘트를 쓸수 있다.
+      this.hasMany(models.Comments,{ as : "Comments",foreignKey : "userId" })
     }
   }
   User.init({

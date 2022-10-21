@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       //나는 1대 N관계의 N임
-      // this.belongsTo(models.Post,{ foreignKey : "postId" })
+      this.belongsTo(models.Post,{ foreignKey : "postId" })
+      this.belongsTo(models.User,{ foreignKey : "userId" })
       //N대 N관계의 N이다
       // this.belongsToMany(models.Post,{ foreignKey : "postId" }) //테이블명임 하단에 모델 네임
     }
