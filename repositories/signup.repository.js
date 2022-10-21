@@ -7,13 +7,13 @@ class SignupRepository {
     //서비스에게 받은 정보를 디비에 저장하는 계층
 
     //실제 디비로 저장하기 때문에 시퀄라이즈 문법 사용
-    const signupUser = await User.create({ nickname , password}) //create(nickname , password)
-    return signupUser
+    return await User.create({ nickname , password}) //create(nickname , password)
+
   }
     //중복 유저 찾기
   findUser = async({nickname}) =>{
-    const findUsers = await User.findAll({where : {nickname}})
-    return findUsers
+    return await User.findAll({where : {nickname}})
+
    }
    
   
