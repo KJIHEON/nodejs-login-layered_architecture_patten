@@ -1,4 +1,4 @@
-const { Post } = require('../models');
+const { Post, Comments} = require('../models');
 
 
 class PostRepository {
@@ -9,18 +9,23 @@ class PostRepository {
   //모든 게시물 조회
   findAllPosts = async ()=>{
     //모든 게시물을 찾아온다.
-    return await this.post.findAll();
-
+    const app = await this.post.findAll({
+      include : [{
+        model :Comments,
+      }]
+    })
+    console.log(app,"ㅇㄴㅁㅇㄴㅁㅇㄴㅁ")
+      return app
   }
   //게시물 작성
   createPost = async ({userId,nickname,title ,content})=>{
-    console.log(userId,nickname,title ,content,"레포")
     //받아온 정보를 저장함
     return await this.post.create({userId,nickname, title ,content}) 
 
   }
  //상세페이지 조회
   getfindById = async({postId})=>{ 
+    console.log(postId)
     //해당하는 아이디 값을 가지고 조회하여 가져옴
     return await this.post.findByPk(postId)
 
@@ -37,5 +42,18 @@ class PostRepository {
 
   }
 }
-
+//인클루드로 찾아오기
+// findAll: async(postId) => {
+//   return await Comments.findAll({
+//       where: { postId },
+//       order: [["createdAt", "DESC"], ["commentId", "DESC"]],
+//       attributes: {
+//           exclude: ["postId", "deletedAt"]
+//       },
+//       include: {
+//           model: Users,
+//           attributes: ["nickname"]
+//       }
+//   });
+// },
 module.exports = PostRepository;

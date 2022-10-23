@@ -10,18 +10,20 @@ class Postsevice {
     //서비스로 보내줌
     const allpost = await this.Postrepository.findAllPosts()
     //작성 날짜로 내림차순
-    allpost.sort((a,b)=>{return b.createdAt-a.createdAt})
-    //데이터를 가공하여 컨트롤러로 보내줌
-    return allpost.map((post)=>{
-      return{
-        postId: post.postId,
-        userId : post.userId,
-        nickname: post.nickname,
-        title: post.title,
-        createdAt: post.createdAt,
-        updatedAt: post.updatedAt,
-      }
-    })  
+    return allpost
+    // allpost.sort((a,b)=>{return b.createdAt-a.createdAt})
+    // //데이터를 가공하여 컨트롤러로 보내줌
+    // return allpost.map((post)=>{
+    //   return{
+    //     postId: post.postId,
+    //     userId : post.userId,
+    //     nickname: post.nickname,
+    //     title: post.title,
+    //     createdAt: post.createdAt,
+    //     updatedAt: post.updatedAt
+    //   }
+      
+    // })  
   }
    //게시물을 저장한다.
   createPost = async ({userId,nickname,title ,content})=>{
@@ -40,12 +42,14 @@ class Postsevice {
   //상세 페이지 조회
   getfindById = async ({postId})=>{
     const postOne = await this.Postrepository.getfindById({postId})
-    return this.fomatReturnData(postOne) //같은 클래스내 함수를 만들어서 this써야함
+    console.log(postOne,"서빗ㅅㅅㅅ")
+    return postOne //같은 클래스내 함수를 만들어서 this써야함
   }
   //게시물 수정 하기
   updatePost = async ({userId,postId,title,content})=>{
      //포스트 아이디봐 일치하는것을 찾아옴
     const findOnePost = await this.Postrepository.getfindById({postId})
+    console.log(findOnePost.userId,"업뎃",userId)
     if(findOnePost.userId !== userId){
       console.log(error)
     //  return res.status(400).send({errorMessage : "작성자가 일치 하지 않습니다."})
@@ -68,6 +72,7 @@ class Postsevice {
   deletePost = async ({userId,postId})=>{
     //포스트 아이디봐 일치하는것을 찾아옴
     const findOnePost = await this.Postrepository.getfindById({postId})
+    console.log(userId)
     if(findOnePost.userId !== userId){
       // return res.status(400).send({errorMessage : "작성자가 일치 하지 않습니다."})
       throw new ValidationError("작성자가 일치 하지 않습니다.")

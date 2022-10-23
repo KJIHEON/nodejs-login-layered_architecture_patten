@@ -11,20 +11,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      //나는 1대 N관계의 1이고
-      this.belongsTo(models.User,{as : "User",sourceKey : "userId" })
+      //포스트는 유저에서 보낸 유저아이디를 받아서 포링키로 보내준다
+      this.belongsTo(models.User,{targetKey : "userId",foreignKey : "userId" })
+      //포스트는 많은 코멘트를 가질 수 있다
+      this.hasMany(models.Comments,{ sourceKey : "postId",foreignKey : "postId" });
+      //포스트는 많은 좋아요를 가질 수 있다ser is associated to Post using an alias. You must use the 'as' keyword to specify the alias within your include statement.
+      this.hasMany(models.Like, {sourceKey: "postId",foreignKey: "postId"});
+      // //N대 N관계의 N이고
       
-      this.hasMany(models.Comments, {as: "Comments",foreignKey: "postId"});
-      this.hasMany(models.Like, {as: "Like",foreignKey: "postId"});
-      //N대 N관계의 N이고
-      // this.hasMany(models.Like,{ as : "Like",foreignKey : "PostId" }) 
     }
   }
   Post.init({
     postId:{type : DataTypes.INTEGER,
             primaryKey:true},
     nickname: DataTypes.STRING,
-    userId: DataTypes.INTEGER,
+    userId:{
+      type : DataTypes.INTEGER,
+      references :{
+        model : 'User',
+        key : 'userId',
+        },   
+    }, 
     title : DataTypes.STRING,
     content : DataTypes.STRING,
     likes :{

@@ -1,30 +1,24 @@
 const LoginrePository = require('../repositories/login.repository')
 const jwt = require('jsonwebtoken')
 const {ValidationError} = require('../exceptions/index.exceptions')
+const bcrypt = require('bcrypt')
 
 class LoginSevice{
     loginrepository = new LoginrePository()
 
 login = async ({nickname, password})=>{
-    try{
 
     //저장소에 정보를 보내준다// 저장소의 리턴값을 받아온다
     const user = await this.loginrepository.login({nickname})
-    //닉네임 패스워드 검증
-    console.log(password == user.password)
-    if(!user || password !== user.password){
-      throw new ValidationError("유저가 없거나 비밀번호가 일치하지 않습니다.")
-      // return res.status(400).send({errorMessage : "유저가 없거나 비밀번호가 일치하지 않습니다."})
-      //리프레쉬 토큰은 디비에 저장시켜야함
-    }
+    //패스워드 복호화후 검증
+    const encryptedPassword = bcrypt.compareSync(password,user.password)
+    // console.log(encryptedPassword,"복호화 확인하기")
+    if(!user || encryptedPassword == false){
+      throw new ValidationError("유저가 없거나 비밀번호가 일치하지 않습니다.")}
     //토큰을 만들어서 보내준다
-    const token = jwt.sign({userId : user.userId },"key")
-   console.log(token)
-   console.log({token})
+    const token = jwt.sign({userId : user.userId },"key",{expiresIn : 100000})
+    console.log(token)
     return token
-    }catch(error) {
-    console.log(error)
-  }
 }
 }
 module.exports = LoginSevice

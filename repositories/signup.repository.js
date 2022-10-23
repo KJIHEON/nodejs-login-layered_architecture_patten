@@ -5,7 +5,6 @@ class SignupRepository {
   //유저 정보 저장하기
   signup = async ({ nickname , password})=>{
     //서비스에게 받은 정보를 디비에 저장하는 계층
-
     //실제 디비로 저장하기 때문에 시퀄라이즈 문법 사용
     return await User.create({ nickname , password}) //create(nickname , password)
 

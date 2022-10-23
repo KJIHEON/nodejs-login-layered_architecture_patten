@@ -5,14 +5,14 @@ const {Like , Post} = require('../models')
 class LikesRepository{
   //유저가 좋아요한 게시물 모두 조회
   findLikeUser =  async({userId})=>{
-    return await Like.findAll({where :{userId}})
-
-  }
-  findPost =async({postId})=>{
-    //반복문에 있는postId를 기준으로 해당하는 포스트의 게시물을 불러온다.
-    //, attributes: {exclude : ['content']} 필요하는거만 찾아옴
-    return await Post.findByPk(postId)
-
+    const like = await Like.findAll({
+      where :{userId},
+      include : [{
+        model : Post,
+      }]
+    })
+    // console.log(like,"2312123123")
+    return like
   }
 
   //좋아요한 유저 찾기

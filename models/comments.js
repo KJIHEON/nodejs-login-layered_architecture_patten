@@ -11,15 +11,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Posts, {foreignKey: "postId",});
-      this.belongsTo(models.User,{foreignKey : "userId"});
+      //코멘트는 포스트 아이디를 참조
+      this.belongsTo(models.Post,{targetKey : "postId",foreignKey: "postId",});
+      // //코멘트는 유저에 유저아이디를 참조
+      this.belongsTo(models.User,{targetKey : "userId",foreignKey : "userId"});
     }
   }
   Comments.init({
     commentId:{type : DataTypes.INTEGER,
       primaryKey:true},
-    postId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
+
+      postId:{
+        type : DataTypes.INTEGER,
+        references :{
+          model : 'Post',
+          key : 'postId',
+          },   
+      }, 
+
+      userId:{
+        type : DataTypes.INTEGER,
+        references :{
+          model : 'User',
+          key : 'userId',
+          },   
+      }, 
     nickname: DataTypes.STRING,
     comment: DataTypes.STRING,
   }, {

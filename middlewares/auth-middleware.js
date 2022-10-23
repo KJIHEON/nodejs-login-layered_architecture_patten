@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { User } = require("../models");
 require("dotenv").config(); //.env 임포트
-const {SECRET_KEY} = process.env 
 
   module.exports = (req, res, next) => {
     const { token } = req.cookies //쿠키에 있는 토큰을 받아옴
@@ -13,7 +12,7 @@ const {SECRET_KEY} = process.env
   return;
 }
 try { //검증
-  const { userId } = jwt.verify(token, SECRET_KEY);  //시크릿 키값으로 토큰을 검증함
+  const { userId } = jwt.verify(token, process.env.SECRET_KEY);  //시크릿 키값으로 토큰을 검증함
   User.findByPk(userId).then((user) => {
     res.locals.user = user; //res.locals.user데이터를 담는다 가상공간에
     next();

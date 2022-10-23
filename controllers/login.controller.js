@@ -20,6 +20,7 @@ try{
   }
   //서비스에서 리턴한 토큰을 받아서 보내준다.
 const loginUser = await this.loginsevice.login({nickname,password})
+
 res.cookie('token',loginUser)
 res.status(200).send({'token':loginUser})
 }catch(error) {
