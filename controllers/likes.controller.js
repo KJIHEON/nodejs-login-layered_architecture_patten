@@ -11,8 +11,7 @@ class LikesController{
      const findPosts = await this.likessevice.findpost({userId})
       res.status(200).send({data : findPosts})
      }catch(error) {
-      console.log(error)
-      res.status(400).send({errorMessage : "좋아요 조회 에러"})
+      next(error)
      }
     }
     //좋아요 누르기
@@ -23,8 +22,7 @@ class LikesController{
       const likes = await this.likessevice.likes({postId,userId})
       res.status(201).send(likes)
       }catch(error) {
-        console.log(error)
-        res.status(400).send({errorMessage : "좋아요 누르기 에러"})
+        next(error)
       }
     }
 }

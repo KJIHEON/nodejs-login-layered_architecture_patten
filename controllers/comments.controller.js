@@ -1,5 +1,5 @@
 const CommentsSevice = require('../services/comments.sevice')
-// const {ValidationError} = require('../exceptions/index.exceptions')
+const {InvalidParamsError} = require('../exceptions/index.exceptions')
 
 class CommentsController {
   commentssevice = new CommentsSevice();
@@ -11,14 +11,14 @@ class CommentsController {
     const {postId} = req.params
     const {comment} = req.body
     if(!comment){
-      return res.status(400).send({
+      throw new InvalidParamsError({
         errorMessage : '댓글을 입력하세요' })
+
       }
     const ceratecomment = await this.commentssevice.ceratecomments({userId,postId,comment,nickname})
     res.status(201).send({data : ceratecomment}) 
     }catch(error){
-      console.log(error)
-      res.status(400).send({errorMessage : "댓글 작성 에러"})
+      next(error)
     }
   }
 
@@ -28,8 +28,7 @@ class CommentsController {
     const getcomment = await this.commentssevice.getfindById({postId})
     res.status(200).send({data : getcomment })
     }catch(error) {
-    console.log(error)
-    res.status(400).send({errorMessage : "댓글 조회 에러"})
+    next(error)
 }
   }
 
@@ -40,15 +39,14 @@ class CommentsController {
     const {comment} = req.body
 
     if(!comment){
-      return res.status(400).send({
+      throw new  InvalidParamsError({
         errorMessage : '댓글을 입력하세요' })
     }
     
     const updatecomment = await this.commentssevice.updatecomment({userId,commentId,comment})
     res.status(200).send({data :updatecomment})
     }catch(error) {
-    console.log(error)
-    res.status(400).send({errorMessage : "댓글 수정 에러"})
+    next(error)
 }
   }
 
@@ -59,8 +57,7 @@ class CommentsController {
     await this.commentssevice.deletecomment({userId,commentId})
     res.status(200).send({msg : "댓글을 삭제 했습니다"})
     }catch(error) {
-    console.log(error)
-    res.status(400).send({errorMessage : "댓글 삭제 에러"})
+    next(error)
 }
   }
 }

@@ -14,7 +14,6 @@ class PostRepository {
         model :Comments,
       }]
     })
-    console.log(app,"ㅇㄴㅁㅇㄴㅁㅇㄴㅁ")
       return app
   }
   //게시물 작성

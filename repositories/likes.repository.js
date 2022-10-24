@@ -11,7 +11,6 @@ class LikesRepository{
         model : Post,
       }]
     })
-    // console.log(like,"2312123123")
     return like
   }
 

@@ -49,9 +49,7 @@ class Postsevice {
   updatePost = async ({userId,postId,title,content})=>{
      //포스트 아이디봐 일치하는것을 찾아옴
     const findOnePost = await this.Postrepository.getfindById({postId})
-    console.log(findOnePost.userId,"업뎃",userId)
     if(findOnePost.userId !== userId){
-      console.log(error)
     //  return res.status(400).send({errorMessage : "작성자가 일치 하지 않습니다."})
       throw new ValidationError("작성자가 일치 하지 않습니다.")
     }

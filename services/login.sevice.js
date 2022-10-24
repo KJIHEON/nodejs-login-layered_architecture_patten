@@ -16,7 +16,7 @@ login = async ({nickname, password})=>{
     if(!user || encryptedPassword == false){
       throw new ValidationError("유저가 없거나 비밀번호가 일치하지 않습니다.")}
     //토큰을 만들어서 보내준다
-    const token = jwt.sign({userId : user.userId },"key",{expiresIn : 100000})
+    const token = jwt.sign({userId : user.userId },"key",{expiresIn : 3600})
     console.log(token)
     return token
 }

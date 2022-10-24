@@ -7,6 +7,7 @@ class LikesSevice{
     //좋아요 조회하기
     findpost =  async({userId})=>{
       const findLikeUser = await this.likesrepository.findLikeUser({userId})
+      // console.log(findLikeUser,"11111111111111111111")
        return findLikeUser.map((like)=>{
         return{
           postId : like.Post.postId,   
@@ -16,8 +17,9 @@ class LikesSevice{
           createdAt :like.Post.createdAt,
           updatedAt :like.Post.updatedAt,
           likes : like.Post.likes
-        }
+        }   
       })
+    }
       // const PostIds = findLikeUser.map((likes)=>likes.postId)  //불러온 게시물의 포스트 아이디를 찾는다.
       // const likePost = [] 
       // for (const postId of PostIds){ //for of 문을 이용하여 PostIds의 포스트 아이디를 하나씩 넣어준다.
@@ -35,7 +37,7 @@ class LikesSevice{
       // }
       //  return likePost.sort((a,b)=>b.likes-a.likes) 
        
-    }
+    
   //좋아요 하기
     likes =  async({postId,userId})=>{
 

@@ -1,4 +1,5 @@
 const PostSevice = require('../services/posts.service') 
+const InvalidParamsError = require('../exceptions/index.exceptions')
 //포스트 서비스를 불러옴
 console.log("포스트컨트롤러")
 class PostController {
@@ -23,8 +24,7 @@ class PostController {
     await this.postsevice.createPost({userId,nickname,title ,content})
     res.status(201).json({msg : "게시물을 저장헀습니다"})
     }catch(error) {
-    console.log(error)
-    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+   next(error)
 }
     }
 
@@ -36,8 +36,7 @@ class PostController {
     res.status(200).json({data : postOne})
   
     }catch(error) {
-    console.log(error)
-    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+    next(error)
 }
   }
   //페이지 수정
@@ -50,10 +49,8 @@ class PostController {
     //수정할 것을 보내준다
     await this.postsevice.updatePost({userId,postId,title,content})
     res.status(200).json({msg : "게시물을 수정했습니다"})
-
     }catch(error) {
-    console.log(error)
-    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+    next(error)
 }
   }
   //게시물 삭제
@@ -66,8 +63,7 @@ class PostController {
     res.status(200).json({msg : "게시물을 삭제했습니다."})
 
     }catch(error) {
-    console.log(error)
-    res.status(400).send({errorMessage : "정보가 일치 하지 않습니다."})
+    next(error)
 }
   }
 }
