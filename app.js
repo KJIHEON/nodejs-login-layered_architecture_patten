@@ -1,7 +1,8 @@
 //정리는 외부에서 받은거 맨위로 그다음 내부 순으로하기
 const express = require('express');
 const app = express();
-// const http =
+// const {createSever} = require('http')
+// const http = createSever(app)
 const cookieParser = require('cookie-parser'); //z쿠키파서는 인덱스 라우터를 걸쳐서 들어감 앞에다가 적어주기
 const Router = require('./routes') 
 const port = 3000;

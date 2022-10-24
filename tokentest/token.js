@@ -8,10 +8,13 @@ app.use(cookieParser());
 let tokenObject = {}; // Refresh Token을 저장할 Object
 
 app.post("/:id", (req, res) => {
+  //아이디 값을 가지고 변수에 할당
   const id = req.params.id;
+  //토큰을 발급 한다 해당하는 사용자의 아이디가 일치하게끔 만들어준다
   const accessToken = createAccessToken(id);
+  //실제 사용자가 서버에서 확인 받은 사람이 맞는지 확인
   const refreshToken = createRefreshToken();
-
+//발급 받았다면 토큰 오브젝트 전역변수에 refreshToken 키값을 가지고 id를 밸루로 가진다.
   tokenObject[refreshToken] = id; // Refresh Token을 가지고 해당 유저의 정보를 서버에 저장합니다.
   res.cookie('accessToken', accessToken); // Access Token을 Cookie에 전달한다.
   res.cookie('refreshToken', refreshToken); // Refresh Token을 Cookie에 전달한다.
@@ -21,6 +24,7 @@ app.post("/:id", (req, res) => {
 
 // Access Token을 생성합니다.
 function createAccessToken(id) {
+  //id를 받아서 jwt 싸인이라는 함수를 사용
   const accessToken = jwt.sign(
     { id: id }, // JWT 데이터
     process.env.SECRET_KEY, // 비밀키
@@ -31,6 +35,7 @@ function createAccessToken(id) {
 
 // Refresh Token을 생성합니다.
 function createRefreshToken() {
+  //E따로 저장은하지 않지만 서버에 저장함
   const refreshToken = jwt.sign(
     {}, // JWT 데이터
     process.env.SECRET_KEY, // 비밀키
@@ -41,7 +46,7 @@ function createRefreshToken() {
 
 // app. js
 
-
+//검증
 app.get("/", (req, res) => {
   const accessToken = req.cookies.accessToken;
   const refreshToken = req.cookies.refreshToken;
