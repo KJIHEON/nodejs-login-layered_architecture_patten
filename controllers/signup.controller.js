@@ -11,10 +11,8 @@ class SignupController  {
       //로그인 했는지 인증을 여기서???
   //다 통과하면 서비스쪽으로 정보를 보내준다
   const {nickname , password} = req.body
-  console.log(nickname,"ㅋㅇㅇㅇ")
-  console.log(nickname , password,"zzzzzzzzzzzzzzzzz")
+  console.log(nickname , password)
   const signupUser = await this.signupService.signup({nickname , password})
-  console.log(signupUser,"컨트롤러12")
     res.status(201).json({data : signupUser})
     //정보확인후 클라에게 보여줌
   }catch(error) {

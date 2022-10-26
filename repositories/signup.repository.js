@@ -9,12 +9,17 @@ class SignupRepository {
     return await User.create({ nickname , password}) //create(nickname , password)
 
   }
+  updaterefreshToken = async({nickname,RefreshToken}) =>{
+    console.log(nickname,"123123123123",RefreshToken)
+    return await User.update({RefreshToken},{where : {nickname}})
+
+  }
     //중복 유저 찾기
   findUser = async({nickname}) =>{
     return await User.findAll({where : {nickname}})
 
    }
-   
+
   
 }
 

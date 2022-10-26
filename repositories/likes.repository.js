@@ -1,7 +1,7 @@
 const {Like , Post} = require('../models')
 
 
-
+//attributes : { exclude : ['content']},order : [['createAt', 'DESC']]
 class LikesRepository{
   //유저가 좋아요한 게시물 모두 조회
   findLikeUser =  async({userId})=>{

@@ -8,6 +8,5 @@ class LoginRepository{
     return await User.findOne({where :{nickname}})
 
 }
-
-}
+  }
 module.exports = LoginRepository

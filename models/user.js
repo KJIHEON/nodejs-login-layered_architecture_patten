@@ -33,7 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type:  DataTypes.STRING
-    }
+    },
+    RefreshToken: {
+      type:  DataTypes.STRING
+    },
     
     
 
