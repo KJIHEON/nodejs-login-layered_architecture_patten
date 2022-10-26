@@ -16,7 +16,8 @@ app.use(express.json()); //body-parser //기본적으로 디폴트 값이 설정
 //프론트에게 열어줄떄 코로스 에러 제거
 app.use(
   cors({
-    origin: 'http://localhost:3000/',
+    origin: 'http://127.0.0.1:3000/',
+    host
     credential: true,
   })
 );
