@@ -65,8 +65,7 @@ createRefreshToken = async ({nickname,password})=>{
   //리프레쉬 토큰 검증
   validateRefreshToken = async(refreshToken)=>{
     try {
-      jwt.verify(refreshToken, process.env.SECRET_KEY); // JWT를 검증합니다.
-      return true;
+      return jwt.verify(refreshToken, process.env.SECRET_KEY); // JWT를 검증합니다.
     } catch (error) {
       return false;
     }

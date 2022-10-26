@@ -20,6 +20,7 @@ class PostController {
   createPost = async (req,res,next)=>{
     try {
     const {userId,nickname} = res.locals.user
+    console.log(res.locals.user,"컨트롤러요")
     const {title ,content} = req.body
     await this.postsevice.createPost({userId,nickname,title ,content})
     res.status(201).json({msg : "게시물을 저장헀습니다"})
