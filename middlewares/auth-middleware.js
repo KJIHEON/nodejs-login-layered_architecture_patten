@@ -10,6 +10,8 @@ const bcrypt = require("bcrypt");
     let userId
     const accessToken = req.cookies.AccessToken
     const refreshToken = req.cookies.RefreshToken 
+    console.log(req.headers,"sdafasdfsdafsdafasdfasdfsad")
+    console.log(req)
     //토큰이 없다면~
    
     if (!accessToken) return res.status(400).json({ "message": "Access Token이 존재하지 않습니다." });
@@ -38,7 +40,7 @@ const bcrypt = require("bcrypt");
     console.log("재발급 해야해요")
     const AccessToken = await LoginSevice.createAccessTokenRe(userId)
     console.log("재발급 완료!")
-    console.log(AccessToken,"재발급한 유저아이디예요")
+    console.log(AccessToken,"재발급한 토큰이예요")
     //쿠키로 보내줌
     res.cookie('AccessToken',AccessToken)
     console.log("쿠키에 보내줬어요")

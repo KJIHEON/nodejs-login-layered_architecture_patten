@@ -1,5 +1,5 @@
 const PostSevice = require('../services/posts.service') 
-const InvalidParamsError = require('../exceptions/index.exceptions')
+// const InvalidParamsError = require('../exceptions/index.exceptions')
 //포스트 서비스를 불러옴
 console.log("포스트컨트롤러")
 class PostController {
@@ -20,7 +20,6 @@ class PostController {
   createPost = async (req,res,next)=>{
     try {
     const {userId,nickname} = res.locals.user
-    console.log(res.locals.user,"컨트롤러요")
     const {title ,content} = req.body
     await this.postsevice.createPost({userId,nickname,title ,content})
     res.status(201).json({msg : "게시물을 저장헀습니다"})
