@@ -32,7 +32,7 @@ createAccessToken = async ({nickname,password})=>{
   if(!user || encryptedPassword == false){
     throw new ValidationError("유저가 없거나 비밀번호가 일치하지 않습니다.")}
   //에쎼쓰 토큰 발급
-  const AccessToken = jwt.sign({userId : user.userId },process.env.SECRET_KEY,{ expiresIn: '7d' })
+  const AccessToken = jwt.sign({userId : user.userId },process.env.SECRET_KEY,{ expiresIn: '10s' })
   return AccessToken
 }
 
@@ -71,15 +71,10 @@ createRefreshToken = async ({nickname,password})=>{
       return false;
     }
   }
- 
   //에세스 토큰 재발급
-  getAccessTokenPayload = async (decodeAccessToken)=>{
-  try {
-    return jwt.verify(decodeAccessToken, process.env.SECRET_KEY); // JWT에서 Payload를 가져옵니다.
-  } catch (error) {
-    return null;
-  }
-}
+  createAccessTokenRe = async (userId)=>{
+    return jwt.sign({userId : userId },process.env.SECRET_KEY,{ expiresIn: '10s' }) // JWT에서 Payload를 가져옵니다.
+    }
 
 // login = async ({nickname, password})=>{
 //     //저장소에 정보를 보내준다// 저장소의 리턴값을 받아온다

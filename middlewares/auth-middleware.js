@@ -1,36 +1,46 @@
 require("dotenv").config(); //.env 임포트
-const jwt = require('jsonwebtoken')
 const { User } = require("../models");
 let LoginSevice = require('../services/login.sevice')
 const bcrypt = require("bcrypt");
     LoginSevice = new LoginSevice()
+
   module.exports = async (req, res, next) => {
     //쿠키로 받아온다.
     const accessToken = req.cookies.AccessToken
     const refreshToken = req.cookies.RefreshToken 
     //토큰이 없다면~
-    if (!refreshToken) return res.status(400).json({ "message": "Refresh Token이 존재하지 않습니다." });
     if (!accessToken) return res.status(400).json({ "message": "Access Token이 존재하지 않습니다." });
     //에쎄스 토큰 검증하기
     const decodeAccessToken = await LoginSevice.validateAccessToken(accessToken)
+    const userId = decodeAccessToken.userId
+    //인증된 에쎄스 토큰이 없을시
+    if(!decodeAccessToken){
+    console.log("에쎄스 토큰 만료 검증 및 재발급")
+    //리프레쉬 토큰 확인하기
+    if (!refreshToken) return res.status(400).json({ "message": "AccessToken이 존재하지 않습니다." });
     //에쎼쓰 토큰 안에 있는 유저정보로 디비에 저장된 유저정보 찾기
     const findUser = await User.findByPk(decodeAccessToken.userId)
-    console.log(AccessToken,"ㅇㅇㅇ에쎼")
     //디비에서 찾아온 리프레쉬 토큰 복호화(내가 가지고 있는 리프레쉬(암호화전) 토큰이랑 디비에 저장되어있는거랑 같은지)
     const decodeRefreshToken = bcrypt.compareSync(refreshToken,findUser.RefreshToken) 
     //위변조가 있다 라고 가정했을때 예외 처리
-    if(decodeRefreshToken == false){return res.status(400).json({ "message": "Refresh Token이 일치하지 않습니다." });}
+    if(decodeRefreshToken == false){return res.status(400).json({"message": "RefreshToken이 일치하지 않습니다." });}
+    
     //리프레쉬 토큰 검증(시크릿 키가 같은지)
     const RefreshToken = await LoginSevice.validateRefreshToken(refreshToken)
-    if(RefreshToken == false){return res.status(400).json({ "message": "Refresh Token이 일치하지 않습니다." })}
+    //일치하지 않을시
+    if(RefreshToken == false){return res.status(400).json({ "message": "RefreshToken이 일치하지 않습니다." })}
+    //검증한 리프레쉬 토큰이 없다면~~
+    if (!accessToken == null) return res.status(419).json({ "message": "RefreshToken이 만료되었습니다." })
     //리프레쉬 정상에 AccessToken 만료시 재발급
-    const AccessToken = await LoginSevice.getAccessTokenPayload(decodeAccessToken)
+    const AccessToken = await LoginSevice.createAccessTokenRe(userId)
+    //쿠키로 보내줌
+    res.cookie('AccessToken',AccessToken)
+    //프론트에서 로컬 스토리지에 저장하기 위해 res에 보내줌
+    res.status(200).send({"message": "AccessToken이 정상적으로 제발급되었습니다.", AccessToken})
     //리프레쉬 토큰이 만료시
-    if (!AccessToken == null) return res.status(419).json({ "message": "Refresh Token이 만료되었습니다." })
-    // console.log(EncryptedRefreshToken,"복홓ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ")
-
-    
-    
+    }
+    res.locals.user = {decodeAccessToken}
+    console.log(res.locals.user)
     next()
 }
 

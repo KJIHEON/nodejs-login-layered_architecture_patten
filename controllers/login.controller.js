@@ -33,11 +33,11 @@ login = async (req,res,next)=>{
     const RefreshToken = await this.loginsevice.createRefreshToken({nickname,password})
     const AccessToken = await this.loginsevice.createAccessToken({nickname,password})
     //AccessToken의 
-  // res.cookie('AccessToken',`Bearer ${AccessToken}`) // Access Token을 Cookie에 전달한다.
-  // res.cookie('RefreshToken',`Bearer ${RefreshToken}`);  //Bearer 리프레쉬 토큰
-  res.cookie('AccessToken',AccessToken) // Access Token을 Cookie에 전달한다.
-  res.cookie('RefreshToken',RefreshToken); 
-  res.status(200).send({"message": "Token이 정상적으로 발급되었습니다.",AccessToken,RefreshToken})
+    // res.cookie('AccessToken',`Bearer ${AccessToken}`) // Access Token을 Cookie에 전달한다.
+    // res.cookie('RefreshToken',`Bearer ${RefreshToken}`);  //Bearer 리프레쉬 토큰
+    res.cookie('AccessToken',AccessToken) // Access Token을 Cookie에 전달한다.
+    res.cookie('RefreshToken',RefreshToken); 
+    res.status(200).send({"message": "Token이 정상적으로 발급되었습니다.",AccessToken,RefreshToken})
   }catch(error) {
    next(error)
   }

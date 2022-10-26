@@ -84,7 +84,7 @@ app.get("/", (req, res) => {
 
 // Access Token을 검증합니다.
 function validateAccessToken(accessToken) {
-  console.log(accessToken,"에쎼스 토큰 검증 하기")
+  console.log(accessToken,"에쎄스 토큰 검증 하기")
   try {
     jwt.verify(accessToken, process.env.SECRET_KEY); // JWT를 검증합니다.
     return true;
