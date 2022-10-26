@@ -17,7 +17,6 @@ app.use(express.json()); //body-parser //기본적으로 디폴트 값이 설정
 app.use(
   cors({
     origin: 'http://127.0.0.1:3000/',
-    host
     credential: true,
   })
 );
