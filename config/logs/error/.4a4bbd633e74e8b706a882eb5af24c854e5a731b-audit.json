@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 3
+    },
+    "auditLog": "C:\\Users\\admin\\OneDrive\\바탕 화면\\nodejs-login layered_architecture_patten\\config\\logs\\error\\.4a4bbd633e74e8b706a882eb5af24c854e5a731b-audit.json",
+    "files": [
+        {
+            "date": 1666946657883,
+            "name": "C:\\Users\\admin\\OneDrive\\바탕 화면\\nodejs-login layered_architecture_patten\\config\\logs\\error\\2022-10-28.error.log",
+            "hash": "238facc82a490249275bc256e6a9d0c3b46f74c79c2df1d3baa317f8d7916260"
+        },
+        {
+            "date": 1667038215374,
+            "name": "C:\\Users\\admin\\OneDrive\\바탕 화면\\nodejs-login layered_architecture_patten\\config\\logs\\error\\2022-10-29.error.log",
+            "hash": "5a972c8d2420294df55e8e7ea2161d077c155df8e46162f6d8aeb5c713088e36"
+        }
+    ],
+    "hashType": "sha256"
+}

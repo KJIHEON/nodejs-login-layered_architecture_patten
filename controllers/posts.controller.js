@@ -42,7 +42,6 @@ class PostController {
   //페이지 수정
   updatePost = async (req,res,next)=>{
     try{
-
     const {userId} = res.locals.user
     const {postId} = req.params;
     const {title,content} = req.body

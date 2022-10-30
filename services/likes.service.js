@@ -7,7 +7,7 @@ class LikesSevice{
     //좋아요 조회하기
     findpost =  async({userId})=>{
       const findLikeUser = await this.likesrepository.findLikeUser({userId})
-      // console.log(findLikeUser,"11111111111111111111")
+      console.log(findLikeUser,"11111111111111111111")
        return findLikeUser.map((like)=>{
         return{
           postId : like.Post.postId,   

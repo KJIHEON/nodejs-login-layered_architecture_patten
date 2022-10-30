@@ -4,14 +4,18 @@
     "bootstrap": "^5.2.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "date-utils": "^1.2.21",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "joi": "^17.6.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
+    "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "safe-buffer": "^5.2.1",
-    "sequelize": "^6.24.0"
+    "sequelize": "^6.24.0",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
     "jest": "^29.2.1",

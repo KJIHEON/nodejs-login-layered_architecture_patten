@@ -29,6 +29,9 @@ loginsevice =  new LoginSevice()
 // 리프레쉬
 login = async (req,res,next)=>{
   try{
+    // if(req.cookies){ //로그인 중복 검사 쿠키에 받아옴 
+    //   return res.status(200).send({"message": "이미 로그인 되어있습니다."})
+    // }
     const {nickname, password} = req.body
     const RefreshToken = await this.loginsevice.createRefreshToken({nickname,password})
     const AccessToken = await this.loginsevice.createAccessToken({nickname,password})
@@ -43,5 +46,6 @@ login = async (req,res,next)=>{
   }
   }
 }
+
 
 module.exports = LoginController
