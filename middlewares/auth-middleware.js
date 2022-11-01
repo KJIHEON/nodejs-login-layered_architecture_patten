@@ -1,63 +1,75 @@
-require("dotenv").config(); //.env 임포트
-const { User } = require("../models");
-let LoginSevice = require('../services/login.sevice')
-const bcrypt = require("bcrypt");
-    LoginSevice = new LoginSevice()
+require('dotenv').config(); //.env 임포트
+const { User } = require('../models');
+let LoginSevice = require('../services/login.sevice');
+const bcrypt = require('bcrypt');
+LoginSevice = new LoginSevice();
 
-  module.exports = async (req, res, next) => {
-    //쿠키로 받아온다.
-    //쿠키파서로 못하니깐 헤더스로 해야함
-    console.log("미들웨어 지나갑니다!!!")
-    let userId
-    //req.headers.accesstoken
-    //req.headers.refreshtoken
-    const accessToken = req.cookies.AccessToken
-    const refreshToken = req.cookies.RefreshToken 
-    //토큰이 없다면~
-   
-    if (!accessToken) return res.status(400).json({ "message": "Access Token이 존재하지 않습니다." });
-     //리프레쉬 토큰 확인하기
-    if (!refreshToken) return res.status(400).json({ "message": "RefreshToken이 존재하지 않습니다." });
-    //에쎄스 토큰 검증하기
-    const decodeAccessToken = await LoginSevice.validateAccessToken(accessToken)
-    //리프레쉬 토큰 검증(시크릿 키가 같은지)
-    const decodeRefreshToken = await LoginSevice.validateRefreshToken(refreshToken)
-    //검증해서 아이디값 가져오기
-    userId = decodeRefreshToken.userId
+module.exports = async (req, res, next) => {
+  //쿠키로 받아온다.
+  //쿠키파서로 못하니깐 헤더스로 해야함
+  console.log('미들웨어 지나갑니다!!!');
+  let userId;
+  //헤더
+  // req.headers.accesstoken
+  // req.headers.refreshtoken
+  //쿠키
+  const accessToken = req.cookies.AccessToken;
+  const refreshToken = req.cookies.RefreshToken;
+  //토큰이 없다면~
 
-    //인증된 에쎄스 토큰이 없을시
-    if(decodeAccessToken == null){
-   
+  if (!accessToken)
+    return res
+      .status(400)
+      .json({ message: 'Access Token이 존재하지 않습니다.' });
+  //리프레쉬 토큰 확인하기
+  if (!refreshToken)
+    return res
+      .status(400)
+      .json({ message: 'RefreshToken이 존재하지 않습니다.' });
+  //에쎄스 토큰 검증하기
+  const decodeAccessToken = await LoginSevice.validateAccessToken(accessToken);
+  //리프레쉬 토큰 검증(시크릿 키가 같은지)
+  const decodeRefreshToken = await LoginSevice.validateRefreshToken(
+    refreshToken
+  );
+  //검증해서 아이디값 가져오기
+  userId = decodeRefreshToken.userId;
+
+  //인증된 에쎄스 토큰이 없을시
+  if (decodeAccessToken == null) {
     //에쎼쓰 토큰 안에 있는 유저정보로 디비에 저장된 유저정보 찾기
-    const findUser = await User.findByPk(userId)
+    const findUser = await User.findByPk(userId);
 
     //디비에서 찾아온 리프레쉬 토큰 복호화(내가 가지고 있는 리프레쉬(암호화전) 토큰이랑 디비에 저장되어있는거랑 같은지)
-    const decodeRefreshToken = bcrypt.compareSync(refreshToken,findUser.RefreshToken) 
-  
+    const decodeRefreshToken = bcrypt.compareSync(
+      refreshToken,
+      findUser.RefreshToken
+    );
+
     //위변조가 있거나 존재 하지 않을때 라고 가정했을때 예외 처리
-    if(decodeRefreshToken == false){return res.status(400).json({ "message": "RefreshToken이 일치하지 않거나 만료 되었습니다." })}
+    if (decodeRefreshToken == false) {
+      return res
+        .status(400)
+        .json({ message: 'RefreshToken이 일치하지 않거나 만료 되었습니다.' });
+    }
 
     //리프레쉬 정상에 AccessToken 만료시 재발급
 
-    const AccessToken = await LoginSevice.createAccessTokenRe(userId)
-
+    const AccessToken = await LoginSevice.createAccessTokenRe(userId);
 
     //쿠키로 보내줌
-    res.cookie('AccessToken',AccessToken)
+    res.cookie('AccessToken', AccessToken);
 
     //프론트에서 로컬 스토리지에 저장하기 위해 res에 보내줌
     //리프레쉬 토큰이 만료시
-    }
-    //유저정보를 찾아서 로컬스에 저장
-    User.findByPk(userId).then((user) => {
-    res.locals.user = user;//res.locals.user데이터를 담는다 가상공간에
-    console.log(res.locals.user,"next전 확인")
-    next()
-    }) 
-
-   
-}
-
+  }
+  //유저정보를 찾아서 로컬스에 저장
+  User.findByPk(userId).then((user) => {
+    res.locals.user = user; //res.locals.user데이터를 담는다 가상공간에
+    console.log(res.locals.user, 'next전 확인');
+    next();
+  });
+};
 
 // const { token } = req.cookies //쿠키에 있는 토큰을 받아옴
 // console.log(!token)
@@ -89,7 +101,7 @@ const bcrypt = require("bcrypt");
 //         errorMessage: '로그인 후 이용 가능한 기능입니다.',
 //       });
 //     }
-  
+
 //     try {
 //       const { userId } = jwt.verify(authToken, SECRET_KEY);
 //       User.findByPk(userId).then((user) => {
@@ -102,5 +114,3 @@ const bcrypt = require("bcrypt");
 //       });
 //     }
 //   };
-
-

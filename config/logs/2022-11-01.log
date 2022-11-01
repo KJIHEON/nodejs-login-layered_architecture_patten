@@ -1,0 +1,12 @@
+ 2022-11-01 00:11:01 || [ [31merror[39m ] ▶ [31muncaughtException: listen EADDRINUSE: address already in use :::3000[39m
+[31mError: listen EADDRINUSE: address already in use :::3000[39m
+[31m    at Server.setupListenHandle [as _listen2] (node:net:1432:16)[39m
+[31m    at listenInCluster (node:net:1480:12)[39m
+[31m    at Server.listen (node:net:1568:7)[39m
+[31m    at Function.listen (C:\Users\admin\OneDrive\바탕 화면\nodejs-login layered_architecture_patten\node_modules\express\lib\application.js:635:24)[39m
+[31m    at Object.<anonymous> (C:\Users\admin\OneDrive\바탕 화면\nodejs-login layered_architecture_patten\app.js:35:5)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1126:14)[39m
+[31m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1180:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:1004:32)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:839:12)[39m
+[31m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)[39m
